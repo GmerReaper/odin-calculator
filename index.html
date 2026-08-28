@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Calculator buttons -->
+    <div class="calculator">
+        <input type="text" id="display" value='0' readonly>
+        <div class="buttons">
+            <!-- Row 1: not wired up yet, layout only -->
+            <button class="func-btn">GT</button>
+            <button class="func-btn">→</button>
+            <button class="func-btn">CE</button>
+            <button class="func-btn" data-operator="clear">AC</button>
+
+            <!-- Row 2 -->
+            <button data-number="7">7</button>
+            <button data-number="8">8</button>
+            <button data-number="9">9</button>
+            <button data-operator="/">÷</button>
+
+            <!-- Row 3 -->
+            <button data-number="4">4</button>
+            <button data-number="5">5</button>
+            <button data-number="6">6</button>
+            <button data-operator="×">×</button>
+
+            <!-- Row 4 -->
+            <button data-number="1">1</button>
+            <button data-number="2">2</button>
+            <button data-number="3">3</button>
+            <button data-operator="-">−</button>
+
+            <!-- Row 5 -->
+            <button data-number="0">0</button>
+            <button data-operator=".">.</button>
+            <button data-operator="=">=</button>
+            <button data-operator="+">+</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
