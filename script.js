@@ -26,22 +26,27 @@ digitbuttons.forEach((button) => {
 operatorbuttons.forEach((button) => {
     button.addEventListener('click', () => {
         //display the current entry and operator when an operator button is clicked
-        currentEntry += button.dataset.operator;
         Display.value = currentEntry;
         //clear the current entry when the clear button is clicked
         switch (button.dataset.operator) {
             case 'clear':
                 currentEntry = '';
                 operatorClicked = false;
-                return Display.value = currentEntry;
+                return Display.value = '0';
         }
         //perform the operation when the equals button is clicked
         switch (button.dataset.operator) {
             case '=':
-                firstNumber = operate(operator, firstNumber, secondNumber);
+                if (operator === undefined || secondNumber === undefined) {
+                    currentEntry = firstNumber.toString();
+                    return Display.value = currentEntry;
+                } else {
+                    firstNumber = operate(operator, firstNumber, secondNumber);
+                    operatorClicked = false;
+                    secondNumber = undefined;
+                    operator = undefined;
+                }
                 currentEntry = firstNumber.toString();
-                Display.value = currentEntry;
-                operatorClicked = false;
                 return Display.value = currentEntry;
         }
         switch (button.dataset.operator) {
@@ -52,12 +57,26 @@ operatorbuttons.forEach((button) => {
                 }
                 return Display.value = currentEntry;
         }
-        //store the first number and operator when an operator button is clicked
-        operatorClicked = true;
+
+        if (currentEntry === '') {
+            currentEntry = '0';
+        }
+
+        currentEntry += button.dataset.operator;
+
+        if (operator !== undefined) {
+            //perform the operation when an operator button is clicked and there is already an operator stored
+            firstNumber = operate(operator, firstNumber, secondNumber);
+            secondNumber = undefined;
+        } else {
+            //store the first number and operator when an operator button is clicked
+            operatorClicked = true;
+            firstNumber = parseFloat(currentEntry);
+        }
         operator = button.dataset.operator;
-        firstNumber = parseFloat(currentEntry);
-        //reset the current entry for the second number
+        Display.value = currentEntry;
         currentEntry = '';
+
         console.log(currentEntry);
     });
 });
