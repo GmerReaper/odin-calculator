@@ -31,12 +31,18 @@ operatorbuttons.forEach((button) => {
         switch (button.dataset.operator) {
             case 'clear':
                 currentEntry = '';
+                firstNumber = undefined;
+                secondNumber = undefined;
+                operator = undefined;
                 operatorClicked = false;
                 return Display.value = '0';
         }
         //perform the operation when the equals button is clicked
         switch (button.dataset.operator) {
             case '=':
+                if (firstNumber === undefined) {
+                    return Display.value = '0';
+                }
                 if (operator === undefined || secondNumber === undefined) {
                     currentEntry = parseFloat(firstNumber.toFixed(2)).toString();
                     return Display.value = currentEntry;    
