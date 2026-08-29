@@ -38,15 +38,15 @@ operatorbuttons.forEach((button) => {
         switch (button.dataset.operator) {
             case '=':
                 if (operator === undefined || secondNumber === undefined) {
-                    currentEntry = firstNumber.toString();
-                    return Display.value = currentEntry;
+                    currentEntry = parseFloat(firstNumber.toFixed(2)).toString();
+                    return Display.value = currentEntry;    
                 } else {
                     firstNumber = operate(operator, firstNumber, secondNumber);
                     operatorClicked = false;
                     secondNumber = undefined;
                     operator = undefined;
                 }
-                currentEntry = firstNumber.toString();
+                currentEntry = parseFloat(firstNumber.toFixed(2)).toString();
                 return Display.value = currentEntry;
         }
         switch (button.dataset.operator) {
@@ -57,17 +57,22 @@ operatorbuttons.forEach((button) => {
                 }
                 return Display.value = currentEntry;
         }
-
-        if (currentEntry === '') {
-            currentEntry = '0';
+        switch (currentEntry) {
+            case '':
+                currentEntry = '0';
+                break;
         }
 
         currentEntry += button.dataset.operator;
 
-        if (operator !== undefined) {
+        if (operator !== undefined && secondNumber !== undefined) {
             //perform the operation when an operator button is clicked and there is already an operator stored
             firstNumber = operate(operator, firstNumber, secondNumber);
+            currentEntry = parseFloat(firstNumber.toFixed(2)).toString();
+            currentEntry += button.dataset.operator;
             secondNumber = undefined;
+        } else if (operator !== undefined && secondNumber === undefined) {
+            
         } else {
             //store the first number and operator when an operator button is clicked
             operatorClicked = true;
