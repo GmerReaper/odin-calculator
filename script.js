@@ -2,7 +2,20 @@ const Display = document.getElementById('display')
 let firstNumber, secondNumber, operator;
 let currentEntry = '';
 let operatorClicked = false;
-
+const Comments = [
+    "Nice try.",
+    "Nope.",
+    "Math says no.",
+    "Not today.",
+    "Can't do that.",
+    "Rule broken.",
+    "Undefined.",
+    "Try again.",
+    "No dice.",
+    "Illegal move.",
+    "Zero says no.",
+    "Bad idea."
+];
 
 const operatorbuttons = document.querySelectorAll('[data-operator]');
 const digitbuttons = document.querySelectorAll('[data-number]');
@@ -12,14 +25,13 @@ digitbuttons.forEach((button) => {
         //display the current entry when a number button is clicked
         currentEntry += button.dataset.number;
         Display.value = currentEntry;
+        fitDisplayText();
         //store the first number and second number when a number button is clicked
         if (operatorClicked) {
             secondNumber = parseFloat(currentEntry);
         } else {
             firstNumber = parseFloat(currentEntry);
         }
-        console.log(currentEntry);
-        console.log(firstNumber, operator, secondNumber);
     });
 });
 
@@ -27,6 +39,7 @@ operatorbuttons.forEach((button) => {
     button.addEventListener('click', () => {
         //display the current entry and operator when an operator button is clicked
         Display.value = currentEntry;
+        fitDisplayText();
         //clear the current entry when the clear button is clicked
         switch (button.dataset.operator) {
             case 'clear':
@@ -35,33 +48,48 @@ operatorbuttons.forEach((button) => {
                 secondNumber = undefined;
                 operator = undefined;
                 operatorClicked = false;
-                return Display.value = '0';
+                Display.value = '0';
+                fitDisplayText();
+                return;
         }
         //perform the operation when the equals button is clicked
         switch (button.dataset.operator) {
             case '=':
                 if (firstNumber === undefined) {
-                    return Display.value = '0';
+                    Display.value = '0';
+                    fitDisplayText();
+                    return;
                 }
                 if (operator === undefined || secondNumber === undefined) {
                     currentEntry = parseFloat(firstNumber.toFixed(2)).toString();
-                    return Display.value = currentEntry;    
+                    Display.value = currentEntry;
+                    fitDisplayText();
+                    return;
                 } else {
                     firstNumber = operate(operator, firstNumber, secondNumber);
+                    if (typeof firstNumber === 'string') {
+                        currentEntry = firstNumber;
+                        Display.value = currentEntry;
+                        fitDisplayText();
+                        return;
+                    }
                     operatorClicked = false;
                     secondNumber = undefined;
                     operator = undefined;
                 }
                 currentEntry = parseFloat(firstNumber.toFixed(2)).toString();
-                return Display.value = currentEntry;
+                Display.value = currentEntry;
+                fitDisplayText();
+                return;
         }
         switch (button.dataset.operator) {
             case '.':
                 if (!currentEntry.includes('.')) {
                     currentEntry += '.';
                     Display.value = currentEntry;
+                    fitDisplayText();
                 }
-                return Display.value = currentEntry;
+                return;
         }
         switch (currentEntry) {
             case '':
@@ -78,7 +106,7 @@ operatorbuttons.forEach((button) => {
             currentEntry += button.dataset.operator;
             secondNumber = undefined;
         } else if (operator !== undefined && secondNumber === undefined) {
-            
+
         } else {
             //store the first number and operator when an operator button is clicked
             operatorClicked = true;
@@ -86,9 +114,8 @@ operatorbuttons.forEach((button) => {
         }
         operator = button.dataset.operator;
         Display.value = currentEntry;
+        fitDisplayText();
         currentEntry = '';
-
-        console.log(currentEntry);
     });
 });
 
@@ -106,7 +133,11 @@ function multiply(a, b) {
 };
 
 function divide(a, b) {
-    return a / b;
+    if (b === 0) {
+        return Comments[Math.floor(Math.random() * Comments.length)];
+    } else {
+        return a / b;
+    }
 };
 
 
@@ -125,3 +156,11 @@ function operate(operator, firstNumber, secondNumber) {
             return "Invalid operator";
     }
 };
+
+//Auto shrink the text to fit the display
+function fitDisplayText() {
+    Display.style.fontSize = '2.2rem';
+    while (Display.scrollWidth > Display.clientWidth && parseFloat(Display.style.fontSize) > 0.6) {
+        Display.style.fontSize = (parseFloat(Display.style.fontSize) - 0.1) + 'rem';
+    }
+}
