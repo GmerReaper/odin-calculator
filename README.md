@@ -1,7 +1,7 @@
-Odin Calculator
+# Odin Calculator
 A working calculator built as part of The Odin Project curriculum.
 
-Skills Used
+## Skills Used
 
 * JavaScript - Functions, DOM manipulation, event listeners, switch statements, ternary operators
 * HTML - Semantic markup, data attributes, forms
@@ -10,7 +10,7 @@ Skills Used
 * VS Code - Code editor with WSL2 integration
 * Debugging - Console logging, tracing state across functions, edge case testing
 
-Features
+## Features
 
 * Full calculator functionality: add, subtract, multiply, divide
 * Chained operations (e.g. `12 + 7 - 1 =` evaluates step by step)
@@ -23,6 +23,6 @@ Features
 * Auto-shrinking display text so long results and messages always fit
 * Rounded results to avoid overflowing the display
 
-Credits
+## Credits
 
 * Built as part of [The Odin Project](https://www.theodinproject.com/) Foundations course
