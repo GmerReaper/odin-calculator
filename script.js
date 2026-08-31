@@ -2,6 +2,8 @@ const Display = document.getElementById('display')
 let firstNumber, secondNumber, operator;
 let currentEntry = '';
 let operatorClicked = false;
+let grandTotal = 0;
+
 const Comments = [
     "Nice try.",
     "Nope.",
@@ -44,6 +46,7 @@ function handleOperator(op) {
             secondNumber = undefined;
             operator = undefined;
             operatorClicked = false;
+            grandTotal = 0;
             Display.value = '0';
             fitDisplayText();
             return;
@@ -69,6 +72,7 @@ function handleOperator(op) {
                     fitDisplayText();
                     return;
                 }
+                grandTotal += firstNumber;
                 operatorClicked = false;
                 secondNumber = undefined;
                 operator = undefined;
@@ -126,6 +130,15 @@ function handleOperator(op) {
                 Display.value = firstNumber + operator;
             }
             fitDisplayText();
+            return;
+    }
+
+    switch (op) {
+        case 'GT':
+            currentEntry = grandTotal.toString();
+            Display.value = currentEntry;
+            fitDisplayText();
+            currentEntry = '';
             return;
     }
 
