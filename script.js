@@ -80,6 +80,7 @@ operatorbuttons.forEach((button) => {
                 currentEntry = parseFloat(firstNumber.toFixed(2)).toString();
                 Display.value = currentEntry;
                 fitDisplayText();
+                currentEntry = '';
                 return;
         }
         switch (button.dataset.operator) {
