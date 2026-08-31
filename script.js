@@ -70,6 +70,11 @@ function handleOperator(op) {
                     currentEntry = firstNumber;
                     Display.value = currentEntry;
                     fitDisplayText();
+                    firstNumber = undefined;
+                    secondNumber = undefined;
+                    operator = undefined;
+                    operatorClicked = false;
+                    currentEntry = '';
                     return;
                 }
                 grandTotal += firstNumber;
@@ -86,6 +91,12 @@ function handleOperator(op) {
 
     switch (op) {
         case '.':
+            if (currentEntry === '') {
+                currentEntry = '0.';
+                Display.value = currentEntry;
+                fitDisplayText();
+                return;
+            }
             if (!currentEntry.includes('.')) {
                 currentEntry += '.';
                 Display.value = currentEntry;
